@@ -4,6 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  /* opacity: .25; */
+}
+
 .triangle {
   clip-path: polygon(100% 0, 0 100%, 100% 100%);
 }
@@ -30,4 +38,12 @@
   -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: destination-out;
   mask-composite: exclude;
+}
+
+
+
+@keyframes spinner {
+  to {
+     transform: rotate(1turn);
+  }
 }

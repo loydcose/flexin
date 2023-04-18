@@ -6,7 +6,7 @@ import CTN from "./common/CTN"
 import { CiDumbbell } from "react-icons/ci"
 import CardStyle from "./common/CardStyle"
 import displayContext from "../displayContext"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 
 export default function Difficulty() {
   const difficulties = [
@@ -27,12 +27,14 @@ export default function Difficulty() {
     },
   ]
 
-  const { setDisplay, setObj } = useContext(displayContext)
+  const { setDisplay, workoutAttributes, setWorkoutAttributes } =
+    useContext(displayContext)
 
   const handleClick = (difficulty) => {
-    setObj((prev) => {
+    setWorkoutAttributes((prev) => {
       return { ...prev, difficulty }
     })
+
     setDisplay("workouts")
   }
 

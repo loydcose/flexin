@@ -37,17 +37,20 @@ export default function Focus() {
     },
   ]
 
-  const { setDisplay, setObj } = useContext(displayContext)
+  const { setDisplay, setWorkoutAttributes } = useContext(displayContext)
 
   const handleClick = (part) => {
-    setObj((prev) => {
+    setWorkoutAttributes((prev) => {
       return { ...prev, part }
     })
     setDisplay("difficulty")
   }
 
   return (
-    <section className="py-20 w-[90%] mx-auto max-w-[1026px] lg:py-32">
+    <section
+      id="focus"
+      className="py-20 w-[90%] mx-auto max-w-[1026px] lg:py-32"
+    >
       <SectionTitle>Choose your focus</SectionTitle>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

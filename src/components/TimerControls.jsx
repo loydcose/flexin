@@ -16,6 +16,8 @@ export default function TimerControls({
   index,
   setIndex,
   exercise,
+  isRest,
+  setIsRest,
 }) {
   const [isRepetition, setIsRepetition] = useState(false)
   const { setDisplay } = useContext(displayContext)
@@ -25,6 +27,11 @@ export default function TimerControls({
   const prevNextIconClass = "m-auto text-dark-50 text-2xl"
 
   const handlePrevNext = (type) => {
+    if (isRest === true) {
+      setIsRest(false)
+      return
+    }
+
     if (type === "prev") {
       index >= 1 && setIndex((prev) => prev - 1)
     } else {
@@ -51,8 +58,11 @@ export default function TimerControls({
 
       {/* bottom controls */}
       <div className="flex items-center gap-3">
-        {exercise.type === "repetition" ? (
-          <button className="border-orange flex items-center gap-2 py-4 px-8 rounded-xl border text-orange" onClick={() => handlePrevNext("next")}>
+        {exercise.type === "repetition" || isRest ? (
+          <button
+            className="border-orange flex items-center gap-2 py-4 px-8 rounded-xl border text-orange"
+            onClick={() => handlePrevNext("next")}
+          >
             <BsCheckLg />
             <span className="text-base">Done</span>
           </button>

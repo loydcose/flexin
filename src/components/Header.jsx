@@ -3,8 +3,12 @@ import { BiDumbbell } from "react-icons/bi"
 import { BsArrowRight } from "react-icons/bs"
 import Check from "../assets/check.svg"
 import HeaderBg from "./HeaderBg"
+import { useContext } from "react"
+import displayContext from "../displayContext"
 
 export default function Header() {
+  const { setDisplay, workoutAttributes } = useContext(displayContext)
+
   return (
     <header className="isolate relative h-screen min-h-[500px] flex">
       <HeaderBg />
@@ -36,14 +40,22 @@ export default function Header() {
             towards a healthier, happier you today!
           </p>
           <div className="flex flex-col gap-4 md:flex-row">
-            <button className="text-dark-10 bg-gradient-to-r from-orange to-yellow rounded-md py-4 px-10 flex items-center justify-center gap-3 relative isolate">
+            <a
+              href="#focus"
+              className="text-dark-10 bg-gradient-to-r from-orange to-yellow rounded-md py-4 px-10 flex items-center justify-center gap-3 relative isolate"
+            >
               <BiDumbbell className="text-2xl" />
               <span className="font-semibold text-base">GET STARTED</span>
-            </button>
-            <button className="gradient-border flex items-center justify-center gap-3 text-orange ">
-              <span className="font-semibold text-base">CONTINUE WORKOUT</span>
-              <BsArrowRight className="text-2xl" />
-            </button>
+            </a>
+            {workoutAttributes.hasOwnProperty("part") &&
+              workoutAttributes.hasOwnProperty("difficulty") && (
+                <button className="gradient-border flex items-center justify-center gap-3 text-orange " onClick={() => setDisplay("workouts")}>
+                  <span className="font-semibold text-base">
+                    CONTINUE WORKOUT
+                  </span>
+                  <BsArrowRight className="text-2xl" />
+                </button>
+              )}
           </div>
         </article>
       </div>
