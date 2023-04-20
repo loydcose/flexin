@@ -18,8 +18,10 @@ export default function TimerControls({
   exercise,
   isRest,
   setIsRest,
+  workoutType,
+  isPause,
+  setIsPause,
 }) {
-  const [isRepetition, setIsRepetition] = useState(false)
   const { setDisplay } = useContext(displayContext)
 
   const prevNextClass =
@@ -27,16 +29,15 @@ export default function TimerControls({
   const prevNextIconClass = "m-auto text-dark-50 text-2xl"
 
   const handlePrevNext = (type) => {
-    if (isRest === true) {
-      setIsRest(false)
-      return
-    }
-
     if (type === "prev") {
       index >= 1 && setIndex((prev) => prev - 1)
     } else {
       index < arrLength - 1 && setIndex((prev) => prev + 1)
     }
+  }
+
+  const handlePauseAndContinue = () => {
+    setIsPause(!isPause)
   }
 
   return (
@@ -67,9 +68,19 @@ export default function TimerControls({
             <span className="text-base">Done</span>
           </button>
         ) : (
-          <TimerButton onClick={() => setIsRepetition(!isRepetition)}>
-            <AiOutlinePause />
-            <span>Pause</span>
+          <TimerButton onClick={handlePauseAndContinue}>
+            {isPause ? (
+              <>
+                <BsFillPlayFill />
+                <span>Continue</span>
+              </>
+            ) : (
+              <>
+                {" "}
+                <AiOutlinePause />
+                <span>Pause</span>
+              </>
+            )}
           </TimerButton>
         )}
         <TimerButton onClick={() => setDisplay("workouts")}>
