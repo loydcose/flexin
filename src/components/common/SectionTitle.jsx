@@ -1,5 +1,4 @@
-
-export default function SectionTitle({children}) {
+export default function SectionTitle({ children }) {
   return (
     <h1 className="font-bold italic text-3xl relative w-fit mx-auto mb-24 lg:mb-32 lg:ml-0">
       {children}

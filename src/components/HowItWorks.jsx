@@ -31,7 +31,6 @@ export default function HowItWorks() {
   return (
     <section className="py-20 w-[90%] mx-auto max-w-[1246px] lg:py-32">
       <SectionTitle>How it works?</SectionTitle>
-
       <div className="grid gap-12 lg:grid-cols-3">
         {contexts.map((context) => (
           <div

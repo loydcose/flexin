@@ -8,6 +8,8 @@ import displayContext from "../displayContext"
 
 export default function Header() {
   const { setDisplay, workoutAttributes } = useContext(displayContext)
+  const isValidAttributes =
+    workoutAttributes?.part && workoutAttributes?.difficulty
 
   return (
     <header className="isolate relative h-screen min-h-[500px] flex">
@@ -47,15 +49,17 @@ export default function Header() {
               <BiDumbbell className="text-2xl" />
               <span className="font-semibold text-base">GET STARTED</span>
             </a>
-            {workoutAttributes.hasOwnProperty("part") &&
-              workoutAttributes.hasOwnProperty("difficulty") && (
-                <button className="gradient-border flex items-center justify-center gap-3 text-orange " onClick={() => setDisplay("workouts")}>
-                  <span className="font-semibold text-base">
-                    CONTINUE WORKOUT
-                  </span>
-                  <BsArrowRight className="text-2xl" />
-                </button>
-              )}
+            {isValidAttributes && (
+              <button
+                className="gradient-border flex items-center justify-center gap-3 text-orange "
+                onClick={() => setDisplay("workouts")}
+              >
+                <span className="font-semibold text-base">
+                  CONTINUE WORKOUT
+                </span>
+                <BsArrowRight className="text-2xl" />
+              </button>
+            )}
           </div>
         </article>
       </div>

@@ -27,8 +27,7 @@ export default function Difficulty() {
     },
   ]
 
-  const { setDisplay, workoutAttributes, setWorkoutAttributes } =
-    useContext(displayContext)
+  const { setDisplay, setWorkoutAttributes } = useContext(displayContext)
 
   const handleClick = (difficulty) => {
     setWorkoutAttributes((prev) => {
@@ -58,7 +57,12 @@ export default function Difficulty() {
           <CiDumbbell className="text-2xl" />
           GENERATE WORKOUT
         </button>
-        <button className="bg-dark-90 py-3 basis-full">BACK</button>
+        <button
+          className="bg-dark-90 py-3 basis-full"
+          onClick={() => setDisplay("homepage")}
+        >
+          BACK
+        </button>
       </div>
     </section>
   )

@@ -1,81 +1,22 @@
 import { HiOutlineChevronDoubleRight } from "react-icons/hi"
-import PushUp from "../assets/workouts/pushup.gif"
-import FlutterKicks from "../assets/workouts/flutter-kicks.gif"
-import JumpingJacks from "../assets/workouts/jumping-jacks.gif"
-import RussianTwist from "../assets/workouts/russian-twist.gif"
-import SitUp from "../assets/workouts/sit-up.gif"
 import displayContext from "../displayContext"
-import { useContext, useEffect, useState } from "react"
-import getWorkouts from "../getWorkouts"
+import { useContext } from "react"
 import capitalize from "../capitalize"
+import { useGetWorkouts } from "../hooks/useGetWorkouts"
 
 export default function Workouts() {
-  const [loading, setLoading] = useState(false)
   const { setDisplay, workoutAttributes, workouts, setWorkouts } =
     useContext(displayContext)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true)
-        const data = await getWorkouts(workoutAttributes)
-        setWorkouts(data)
-      } catch (error) {
-        console.error(error.message)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchData()
-  }, [])
-
-  console.log(workouts)
-
-  const exercises = [
-    {
-      id: 1,
-      name: "Push up",
-      image: PushUp,
-      type: "repetition",
-      longevity: 8,
-    },
-    {
-      id: 2,
-      name: "Flutter kicks",
-      image: FlutterKicks,
-      type: "duration",
-      longevity: 30,
-    },
-    {
-      id: 3,
-      name: "Jumping jacks",
-      image: JumpingJacks,
-      type: "duration",
-      longevity: 20,
-    },
-    {
-      id: 4,
-      name: "Russian twist",
-      image: RussianTwist,
-      type: "repetition",
-      longevity: 12,
-    },
-    {
-      id: 5,
-      name: "Sit up",
-      image: SitUp,
-      type: "repetition",
-      longevity: 8,
-    },
-  ]
+  const { loading } = useGetWorkouts(workouts, workoutAttributes, setWorkouts)
 
   return (
     <section className="py-20 lg:py-32 relative isolate">
       {/* button container */}
       {!loading && (
-        <div className="absolute inset-x-0 bottom-20 lg:bottom-32 h-[200px] flex bg-gradient-to-t from-dark-full/[.75] to-transparent z-20">
+        <div className="fixed inset-x-0 bottom-0 h-[200px] flex bg-gradient-to-t from-dark-full/[.75] to-transparent z-20">
           <button
-            className="m-auto relative w-[220px] h-[67px] isolate group"
+            className="m-auto relative w-[220px] h-[67px] isolate group hover:scale-105"
             onClick={() => setDisplay("timer")}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-orange to-yellow -z-20 -skew-x-[30deg] rounded-lg"></div>
@@ -122,7 +63,7 @@ export default function Workouts() {
                   <img
                     src={workout.image}
                     alt={workout.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover pointer-events-none select-none"
                   />
                 </div>
 

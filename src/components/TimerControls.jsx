@@ -1,43 +1,44 @@
-import { useContext, useState } from "react"
-import { BsChevronDoubleRight, BsStopFill } from "react-icons/bs"
-import { AiOutlinePause, AiOutlineStop } from "react-icons/ai"
-import { BsFillPlayFill } from "react-icons/bs"
-import { BsCheckLg } from "react-icons/bs"
-
-import { FiChevronRight, FiChevronsLeft, FiChevronsRight } from "react-icons/fi"
-import { FiChevronLeft } from "react-icons/fi"
-import TimerButton from "./common/TimerButton"
+import { useContext, useEffect, useRef, useState } from "react"
+import { BsStopFill, BsFillPlayFill, BsCheckLg } from "react-icons/bs"
+import { AiOutlinePause } from "react-icons/ai"
+import { FiChevronRight, FiChevronLeft } from "react-icons/fi"
 import displayContext from "../displayContext"
-import PrevNextBtn from "./common/PrevNextBtn"
 
 export default function TimerControls({
   children,
   arrLength,
-  index,
-  setIndex,
-  exercise,
+  workout,
   isRest,
-  setIsRest,
-  workoutType,
   isPause,
   setIsPause,
+  workoutIndex,
+  setWorkoutIndex,
 }) {
   const { setDisplay } = useContext(displayContext)
-
+  const canBeSkip = workout.type === "repetition" || isRest
   const prevNextClass =
-    "absolute w-[47px] aspect-square rounded-lg hover:bg-dark-90 transition-all flex top-50% -translate-y-1/2"
+    "absolute w-[47px] aspect-square rounded-lg hover:bg-dark-90/[.50] active:bg-transparent transition-all flex top-50% -translate-y-1/2"
   const prevNextIconClass = "m-auto text-dark-50 text-2xl"
+  const buttonClass =
+    "border-dark-85 flex items-center gap-2 py-4 px-8 rounded-xl border text-dark-50 text-base hover:bg-dark-90/[.25] transition-opacity focus:ring-2 focus:ring-dark-85 active:bg-transparent"
 
+  // todo the tab index and space event are double executing
   const handlePrevNext = (type) => {
-    if (type === "prev") {
-      index >= 1 && setIndex((prev) => prev - 1)
-    } else {
-      index < arrLength - 1 && setIndex((prev) => prev + 1)
-    }
-  }
+    isPause && setIsPause(false)
+    // short delay for resetting timers before switching
+    setTimeout(() => {
+      if (type === "prev") {
+        workoutIndex >= 1 && setWorkoutIndex((prev) => prev - 1)
+      } else {
+        const isLastWorkout = workoutIndex === arrLength - 1
 
-  const handlePauseAndContinue = () => {
-    setIsPause(!isPause)
+        if (isLastWorkout) {
+          setDisplay("completed")
+        } else {
+          setWorkoutIndex((prev) => prev + 1)
+        }
+      }
+    }, 10)
   }
 
   return (
@@ -54,21 +55,18 @@ export default function TimerControls({
       >
         <FiChevronRight className={prevNextIconClass} />
       </button>
-
       {children}
-
-      {/* bottom controls */}
       <div className="flex items-center gap-3">
-        {exercise.type === "repetition" || isRest ? (
+        {canBeSkip ? (
           <button
-            className="border-orange flex items-center gap-2 py-4 px-8 rounded-xl border text-orange"
+            className="border-orange flex items-center gap-2 py-4 px-8 rounded-xl border text-orange hover:bg-orange/[.10] transition-all  focus:ring-2 focus:ring-orange active:bg-transparent"
             onClick={() => handlePrevNext("next")}
           >
             <BsCheckLg />
             <span className="text-base">Done</span>
           </button>
         ) : (
-          <TimerButton onClick={handlePauseAndContinue}>
+          <button className={buttonClass} onClick={() => setIsPause(!isPause)}>
             {isPause ? (
               <>
                 <BsFillPlayFill />
@@ -76,17 +74,16 @@ export default function TimerControls({
               </>
             ) : (
               <>
-                {" "}
                 <AiOutlinePause />
                 <span>Pause</span>
               </>
             )}
-          </TimerButton>
+          </button>
         )}
-        <TimerButton onClick={() => setDisplay("workouts")}>
+        <button className={buttonClass} onClick={() => setDisplay("workouts")}>
           <BsStopFill />
           <span>Stop</span>
-        </TimerButton>
+        </button>
       </div>
     </div>
   )
