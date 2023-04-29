@@ -29,7 +29,8 @@ export const useTimer = (
 
   const runTimer = (duration) => {
     setIsRest(type === "rest")
-    const isLastWorkout = workoutIndex === workouts.length - 1
+    const isLastWorkout =
+      workoutIndex !== 0 && workoutIndex === workouts.length - 1
     const hasToBeContinue = type === "duration" && previousCircleLength
     const margin = 100 / duration
 
@@ -72,6 +73,8 @@ export const useTimer = (
   }
 
   const handlePauseAndContinue = () => {
+    // prevents running at the initial workout
+    if (longevity === 0) return
     if (!isPause) {
       previousCircleLength = 100 / (longevity / secondsTimer)
       setCircleTimerLength(previousCircleLength)

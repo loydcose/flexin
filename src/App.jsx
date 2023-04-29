@@ -6,6 +6,7 @@ import Timer from "./components/Timer"
 import Workouts from "./components/Workouts"
 import displayContext from "./displayContext"
 import { useAttributes } from "./hooks/useAttributes"
+import "animate.css"
 
 function App() {
   const [display, setDisplay] = useState("homepage")

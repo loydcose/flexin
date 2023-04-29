@@ -29,23 +29,25 @@ export default function HowItWorks() {
   ]
 
   return (
-    <section className="py-20 w-[90%] mx-auto max-w-[1246px] lg:py-32">
-      <SectionTitle>How it works?</SectionTitle>
-      <div className="grid gap-12 lg:grid-cols-3">
-        {contexts.map((context) => (
-          <div
-            key={context.id}
-            className="flex flex-col items-center lg:items-start lg:text-start text-center"
-          >
-            <div className="bg-dark-90 p-3 rounded-lg mb-6 text-orange text-2xl">
-              {context.icon}
+    <section className="bg-[#151515] relative overflow-x-hidden">
+      <div className="py-32 w-[90%] mx-auto max-w-[1246px] lg:py-48">
+        <SectionTitle>How it works?</SectionTitle>
+        <div className="grid gap-24 lg:grid-cols-3">
+          {contexts.map((context) => (
+            <div
+              key={context.id}
+              className="flex flex-col items-center lg:items-start lg:text-start text-center animate__animated animate__fadeInRight"
+            >
+              <div className="bg-dark-90/[.25] p-5 md:p-6 rounded-lg mb-6 text-orange text-2xl">
+                {context.icon}
+              </div>
+              <h2 className="font-bold text-lg mb-2">{context.title}</h2>
+              <p className="text-dark-40 max-w-[315px] md:text-base">
+                {context.description}
+              </p>
             </div>
-            <h2 className="text-bold text-xl mb-2">{context.title}</h2>
-            <p className="text-dark-40 max-w-[315px] md:text-base">
-              {context.description}
-            </p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   )

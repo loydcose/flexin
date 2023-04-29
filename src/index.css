@@ -24,26 +24,6 @@ html {
   clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
 }
 
-.gradient-border {
-  position: relative;
-  padding: 20px 30px;
-}
-
-.gradient-border::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 6px;
-  border: 2px solid transparent;
-  background: linear-gradient(45deg, #e76456, #f09b57) border-box;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: destination-out;
-  mask-composite: exclude;
-}
-
 @keyframes spinner {
   to {
     transform: rotate(1turn);
@@ -52,7 +32,7 @@ html {
 
 .rotate-animation {
   animation-name: rotate-scale;
-  animation-duration: 750ms;
+  animation-duration: 1000ms;
   animation-timing-function: ease-in-out;
   animation-iteration-count: 1;
 }
@@ -62,7 +42,7 @@ html {
     transform: rotate(0deg) scale(1);
   }
   50% {
-    transform: rotate(180deg) scale(1.1);
+    transform: rotate(180deg) scale(1.35);
   }
   100% {
     transform: rotate(360deg) scale(1);

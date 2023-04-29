@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react"
+import { useContext } from "react"
 import { BsStopFill, BsFillPlayFill, BsCheckLg } from "react-icons/bs"
 import { AiOutlinePause } from "react-icons/ai"
 import { FiChevronRight, FiChevronLeft } from "react-icons/fi"
@@ -20,18 +20,17 @@ export default function TimerControls({
     "absolute w-[47px] aspect-square rounded-lg hover:bg-dark-90/[.50] active:bg-transparent transition-all flex top-50% -translate-y-1/2"
   const prevNextIconClass = "m-auto text-dark-50 text-2xl"
   const buttonClass =
-    "border-dark-85 flex items-center gap-2 py-4 px-8 rounded-xl border text-dark-50 text-base hover:bg-dark-90/[.25] transition-opacity focus:ring-2 focus:ring-dark-85 active:bg-transparent"
+    "border-dark-85 flex items-center gap-2 py-4 px-10 rounded-xl border text-dark-50 text-base hover:bg-dark-90/[.25] transition-opacity focus:ring-2 focus:ring-dark-85 active:bg-transparent"
 
-  // todo the tab index and space event are double executing
   const handlePrevNext = (type) => {
     isPause && setIsPause(false)
-    // short delay for resetting timers before switching
+    // short delay for interval cleanup
     setTimeout(() => {
       if (type === "prev") {
         workoutIndex >= 1 && setWorkoutIndex((prev) => prev - 1)
       } else {
-        const isLastWorkout = workoutIndex === arrLength - 1
-
+        const isLastWorkout =
+          workoutIndex !== 0 && workoutIndex === arrLength - 1
         if (isLastWorkout) {
           setDisplay("completed")
         } else {
@@ -44,22 +43,22 @@ export default function TimerControls({
   return (
     <div className="flex flex-col items-center justify-center relative">
       <button
-        className={prevNextClass + " left-0"}
+        className={prevNextClass + " left-0 md:left-4"}
         onClick={() => handlePrevNext("prev")}
       >
         <FiChevronLeft className={prevNextIconClass} />
       </button>
       <button
-        className={prevNextClass + " right-0"}
+        className={prevNextClass + " right-0 md:right-4"}
         onClick={() => handlePrevNext("next")}
       >
         <FiChevronRight className={prevNextIconClass} />
       </button>
       {children}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-5">
         {canBeSkip ? (
           <button
-            className="border-orange flex items-center gap-2 py-4 px-8 rounded-xl border text-orange hover:bg-orange/[.10] transition-all  focus:ring-2 focus:ring-orange active:bg-transparent"
+            className="border-orange flex items-center gap-2 py-4 px-10 rounded-xl border text-orange hover:bg-orange/[.10] transition-all  focus:ring-2 focus:ring-orange active:bg-transparent"
             onClick={() => handlePrevNext("next")}
           >
             <BsCheckLg />
